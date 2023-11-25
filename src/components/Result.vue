@@ -1,18 +1,28 @@
 <template>
     <div class="result">
         <div class="result__icon">
-            <img :src="iconUrl" alt="Site Icon" />
+            <img
+                :src="iconUrl"
+                alt="Site Icon" />
         </div>
         <div class="result__content">
             <h2 class="result__title">
-                <a class="result__a" rel="noopener" :href="url">{{title}}</a>
+                <a
+                    class="result__a"
+                    rel="noopener"
+                    :href="url">
+                    {{ title }}
+                </a>
             </h2>
             <div class="result__url">
-                <a class="result__url" rel="noopener" :href="url">
-                    <span class="result__url__domain">{{url}}</span>
+                <a
+                    class="result__url"
+                    rel="noopener"
+                    :href="url">
+                    <span class="result__url__domain">{{ url }}</span>
                 </a>
             </div>
-            <div class="result__description">{{description}}</div>
+            <div class="result__description">{{ description }}</div>
         </div>
     </div>
 </template>
@@ -61,7 +71,7 @@ export default {
     vertical-align: middle;
     display: inline-block;
     max-width: 100%;
-    color: #00278e;;
+    color: #00278e;
     font-family: inherit;
     text-decoration: none;
     white-space: nowrap;
@@ -100,7 +110,7 @@ a:hover {
     text-decoration: underline;
 }
 
-.result__icon img{
+.result__icon img {
     position: absolute;
     top: 2px;
     left: -35px;

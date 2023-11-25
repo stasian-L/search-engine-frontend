@@ -1,6 +1,10 @@
 <template>
     <div class="content">
-        <div style="position: absolute; top: 10px; left: 5px"><authentication @authorize="onAuthorize" @logout="onLogout"></authentication></div>
+        <div style="position: absolute; top: 10px; left: 5px">
+            <authentication
+                @authorize="onAuthorize"
+                @logout="onLogout"></authentication>
+        </div>
         <div class="crawler-button"><crawler></crawler></div>
         <div class="logo-wrap">
             <img
@@ -8,51 +12,51 @@
                 class="logo-wrap__image"
                 src="../assets/logo.png"
                 alt="atakata_logo"
-                style="object-fit: contain;"
-            />
+                style="object-fit: contain" />
             <img
                 title="SnailSnailGo"
                 class="logo-wrap__text"
                 src="../assets/logo_text.png"
                 alt="atakata_logo"
-                style="object-fit: contain;"
-            />
+                style="object-fit: contain" />
         </div>
         <div class="search-wrapper">
-            <SearchBar @search="search" :suggestions="suggestions"/>
+            <SearchBar
+                @search="search"
+                :suggestions="suggestions" />
         </div>
     </div>
 </template>
 
 <script>
-import SearchBar from '@/components/SearchBar.vue'
-import Crawler from "@/views/Crawler.vue";
-import Authentication from "@/views/Authentication.vue";
+import SearchBar from '@/components/SearchBar.vue';
+import Authentication from '@/views/Authentication.vue';
+import Crawler from '@/views/Crawler.vue';
 export default {
     data() {
         return {
-            suggestions: [],
-        }
+            suggestions: []
+        };
     },
     methods: {
         search(query) {
-            this.suggestions.unshift(query.q)
+            this.suggestions.unshift(query.q);
             this.suggestions = [...new Set(this.suggestions)];
             localStorage.setItem('suggestions', this.suggestions.toString());
 
-            this.$router.push({name: 'search', query: query}) 
+            this.$router.push({ name: 'search', query: query });
         },
         onAuthorize() {
-            this.suggestions = localStorage.getItem('suggestions').split(',')
+            this.suggestions = localStorage.getItem('suggestions').split(',');
         },
-            onLogout() {
-                this.suggestions = []
-            },
+        onLogout() {
+            this.suggestions = [];
+        }
     },
     async mounted() {
         let isLoggedIn = localStorage.getItem('authToken') !== null;
-        if(isLoggedIn) {
-            this.suggestions = localStorage.getItem('suggestions').split(',')
+        if (isLoggedIn) {
+            this.suggestions = localStorage.getItem('suggestions').split(',');
         }
     },
     components: {
@@ -60,7 +64,7 @@ export default {
         Crawler,
         SearchBar
     }
-}
+};
 </script>
 
 <style>

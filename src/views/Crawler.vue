@@ -1,21 +1,35 @@
 <template>
     <div class="dropdown">
-        <button @click="toggleDropdown" class="dropdown-button">Crawler</button>
+        <button
+            @click="toggleDropdown"
+            class="dropdown-button">
+            Crawler
+        </button>
         <ul :class="{ 'menu-list': true, 'is-visible': showDropdown }">
-            <li v-for="item in menuItems" :key="item.id">
-                <div class="menu-item" @click="openForm(item.id)">{{ item.name }}</div>
+            <li
+                v-for="item in menuItems"
+                :key="item.id">
+                <div
+                    class="menu-item"
+                    @click="openForm(item.id)">
+                    {{ item.name }}
+                </div>
             </li>
         </ul>
-        <div v-if="showModal" class="modal-background">
+        <div
+            v-if="showModal"
+            class="modal-background">
             <div class="modal-container">
-                <component :is="currentForm" @close="closeForm" />
+                <component
+                    :is="currentForm"
+                    @close="closeForm" />
             </div>
         </div>
     </div>
 </template>
 <script>
-import CrawlUrlForm from '@/components/CrawlUrlForm.vue'
-import CrawlDomainForm from '@/components/CrawlDomainForm.vue'
+import CrawlDomainForm from '@/components/CrawlDomainForm.vue';
+import CrawlUrlForm from '@/components/CrawlUrlForm.vue';
 
 export default {
     components: {
@@ -27,35 +41,35 @@ export default {
             showDropdown: false,
             menuItems: [
                 { id: 1, name: 'Crawl URL' },
-                { id: 2, name: 'Crawl domain' },
+                { id: 2, name: 'Crawl domain' }
             ],
             showModal: false,
             currentForm: ''
-        }
+        };
     },
     methods: {
         toggleDropdown() {
-            this.showDropdown = !this.showDropdown
+            this.showDropdown = !this.showDropdown;
         },
         openForm(itemId) {
-            this.currentForm = this.getFormName(itemId)
-            this.showModal = true
+            this.currentForm = this.getFormName(itemId);
+            this.showModal = true;
         },
         closeForm() {
-            this.showModal = false
+            this.showModal = false;
         },
         getFormName(itemId) {
-            switch(itemId) {
+            switch (itemId) {
                 case 1:
-                    return 'crawl-url-form'
+                    return 'crawl-url-form';
                 case 2:
-                    return 'crawl-domain-form'
+                    return 'crawl-domain-form';
                 default:
-                    return ''
+                    return '';
             }
         }
     }
-}
+};
 </script>
 <style>
 .dropdown {
@@ -68,11 +82,12 @@ export default {
     height: 25px;
     border: 1px solid #242622;
     border-radius: 15px;
-    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
     background-color: white;
 }
 
-.dropdown-button:hover, .dropdown-button:active {
+.dropdown-button:hover,
+.dropdown-button:active {
     background-color: #333333;
     color: white;
 }
@@ -91,7 +106,7 @@ export default {
     list-style: none;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 .is-visible {
@@ -132,6 +147,5 @@ export default {
     z-index: 99999;
     background-color: #f2f2f2;
     border-radius: 5px;
-
 }
 </style>

@@ -4,11 +4,17 @@
         <form @submit.prevent="register">
             <div>
                 <label>Username</label>
-                <input type="text" v-model="username" required>
+                <input
+                    type="text"
+                    v-model="username"
+                    required />
             </div>
             <div>
                 <label>Password</label>
-                <input type="password" v-model="password" required>
+                <input
+                    type="password"
+                    v-model="password"
+                    required />
             </div>
             <div>
                 <button type="submit">Register</button>
@@ -21,8 +27,8 @@
 export default {
     data() {
         return {
-            username: "",
-            password: ""
+            username: '',
+            password: ''
         };
     },
     methods: {
@@ -33,7 +39,7 @@ export default {
                     mode: 'cors',
                     credentials: 'include',
                     headers: {
-                        'Authorization': 'Basic ' + btoa(this.username + ':' + this.password)
+                        Authorization: 'Basic ' + btoa(this.username + ':' + this.password)
                     },
                     body: JSON.stringify({
                         username: this.username,
@@ -45,7 +51,7 @@ export default {
 
                 localStorage.setItem('auth', 'Basic ' + btoa(this.username + ':' + this.password));
 
-                this.$router.push("/login");
+                this.$router.push('/login');
             } catch (error) {
                 console.log(error);
             }
@@ -53,6 +59,4 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

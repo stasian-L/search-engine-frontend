@@ -5,42 +5,106 @@
             <form ref="registerForm">
                 <div>
                     <label for="username">Username</label>
-                    <input type="text" name="username" v-model="registerData.username" required>
+                    <input
+                        type="text"
+                        name="username"
+                        v-model="registerData.username"
+                        required />
                 </div>
                 <div>
                     <label for="email">Email</label>
-                    <input type="email" name="email" v-model="registerData.email" required>
+                    <input
+                        type="email"
+                        name="email"
+                        v-model="registerData.email"
+                        required />
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input type="password" name="password" v-model="registerData.password" required>
+                    <input
+                        type="password"
+                        name="password"
+                        v-model="registerData.password"
+                        required />
                 </div>
-                <div class="error-message" v-if="registerError"><span class="error-text">{{ registerError }}</span></div>
+                <div
+                    class="error-message"
+                    v-if="registerError">
+                    <span class="error-text">{{ registerError }}</span>
+                </div>
                 <div class="buttons">
-                    <button class="submit-button" type="submit" @click.prevent="register">Register</button>
-                    <button class="cancel-button" type="button" @click="handleCancel">Cancel</button>
+                    <button
+                        class="submit-button"
+                        type="submit"
+                        @click.prevent="register">
+                        Register
+                    </button>
+                    <button
+                        class="cancel-button"
+                        type="button"
+                        @click="handleCancel">
+                        Cancel
+                    </button>
                 </div>
             </form>
-            <p>Already have an account? <a href="#" @click.prevent="toggleForms">Log in here</a></p>
+            <p>
+                Already have an account?
+                <a
+                    href="#"
+                    @click.prevent="toggleForms">
+                    Log in here
+                </a>
+            </p>
         </div>
         <div v-else>
             <h2>Login</h2>
-            <form class="login-form" ref="loginForm">
+            <form
+                class="login-form"
+                ref="loginForm">
                 <div>
                     <label for="username">Username</label>
-                    <input type="text" name="username" v-model="loginData.username" required>
+                    <input
+                        type="text"
+                        name="username"
+                        v-model="loginData.username"
+                        required />
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input type="password" name="password" v-model="loginData.password" required>
+                    <input
+                        type="password"
+                        name="password"
+                        v-model="loginData.password"
+                        required />
                 </div>
-                <div class="error-message" v-if="loginError"><span class="error-text">{{ loginError }}</span></div>
+                <div
+                    class="error-message"
+                    v-if="loginError">
+                    <span class="error-text">{{ loginError }}</span>
+                </div>
                 <div class="buttons">
-                    <button class="submit-button" type="submit" @click.prevent="login">Login</button>
-                    <button class="cancel-button" type="button" @click="handleCancel">Cancel</button>
+                    <button
+                        class="submit-button"
+                        type="submit"
+                        @click.prevent="login">
+                        Login
+                    </button>
+                    <button
+                        class="cancel-button"
+                        type="button"
+                        @click="handleCancel">
+                        Cancel
+                    </button>
                 </div>
             </form>
-            <p>Don't have an account? <a href="#" @click.prevent="toggleForms">Register here</a></p>
+            <p>
+                Don't have an account?
+                <a
+                    href="#"
+                    @click.prevent="toggleForms">
+                    Register here
+                </a>
+            </p>
         </div>
     </div>
 </template>
@@ -61,46 +125,54 @@ export default {
                 username: '',
                 password: ''
             }
-        }
+        };
     },
     methods: {
         async register() {
             if (!this.$refs.registerForm.checkValidity()) {
-                this.$refs.registerForm.reportValidity()
+                this.$refs.registerForm.reportValidity();
                 return;
             }
-            const response = await fetch('http://localhost:8080/api/auth/register?username=' + this.registerData.username + '&email=' + this.registerData.email + '&password=' + this.registerData.password, {
-                method: 'POST',
-                mode: 'cors'
-            });
+            const response = await fetch(
+                'http://localhost:8080/api/auth/register?username=' +
+                    this.registerData.username +
+                    '&email=' +
+                    this.registerData.email +
+                    '&password=' +
+                    this.registerData.password,
+                {
+                    method: 'POST',
+                    mode: 'cors'
+                }
+            );
 
-            if(response.status !== 400) {
+            if (response.status !== 400) {
                 localStorage.setItem('authToken', 'Basic ' + btoa(this.registerData.username + ':' + this.registerData.password));
                 this.$emit('close', { message: 'Form closed successfully' });
             } else {
-                response.text().then((text) => this.registerError = text);
+                response.text().then(text => (this.registerError = text));
             }
         },
         async login() {
             if (!this.$refs.loginForm.checkValidity()) {
-                this.$refs.loginForm.reportValidity()
+                this.$refs.loginForm.reportValidity();
                 return;
             }
             const response = await fetch('http://localhost:8080/login', {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
-                    'Authorization': 'Basic ' + btoa(this.loginData.username + ':' + this.loginData.password)
+                    Authorization: 'Basic ' + btoa(this.loginData.username + ':' + this.loginData.password)
                 }
             });
 
             console.log('###: ' + JSON.stringify(response));
 
-            if(response.status !== 401) {
+            if (response.status !== 401) {
                 localStorage.setItem('authToken', 'Basic ' + btoa(this.loginData.username + ':' + this.loginData.password));
                 this.$emit('close', { message: 'Form closed successfully' });
             } else {
-                this.loginError = "Bad credentials"
+                this.loginError = 'Bad credentials';
             }
         },
         toggleForms() {
@@ -110,15 +182,14 @@ export default {
             this.$emit('close', { message: 'Form closed successfully' });
         }
     }
-}
+};
 </script>
 
 <style scoped>
-
 .container {
     border-radius: 10px;
     padding: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     margin: auto;
 }
@@ -139,10 +210,9 @@ input {
     margin: 2px 10px 10px;
     border: none;
     border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0,0,0,.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     width: 100%;
     font-size: 12px;
-
 }
 
 /*button[type="submit"] {*/
@@ -179,7 +249,7 @@ a {
     font-size: 13px;
     font-weight: bold;
     line-height: 20px;
-    text-shadow: 1px 1px rgba(250,250,250,.3);
+    text-shadow: 1px 1px rgba(250, 250, 250, 0.3);
 }
 .buttons {
     display: flex;
@@ -235,5 +305,4 @@ h2 {
 p {
     font-size: 12px;
 }
-
 </style>

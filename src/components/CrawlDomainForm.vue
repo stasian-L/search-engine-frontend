@@ -1,20 +1,40 @@
 <template>
     <h3 class="title">Web Crawler</h3>
     <div class="crawl-domain-form">
-        <form @submit.prevent="handleSubmit" ref="form">
+        <form
+            @submit.prevent="handleSubmit"
+            ref="form">
             <div class="input-container">
                 <label class="input-label">Domain</label>
                 <div class="input-wrapper">
-                    <input class="input-field" type="url" v-model="domainRoot" required/>
+                    <input
+                        class="input-field"
+                        type="url"
+                        v-model="domainRoot"
+                        required />
                 </div>
                 <label class="input-label">depth</label>
                 <div class="input-wrapper">
-                    <input class="input-field" type="number" min="-1" v-model="depth" required/>
+                    <input
+                        class="input-field"
+                        type="number"
+                        min="-1"
+                        v-model="depth"
+                        required />
                 </div>
             </div>
             <div class="buttons">
-                <button class="submit-button" type="submit">Submit</button>
-                <button class="cancel-button" type="button" @click="handleCancel">Cancel</button>
+                <button
+                    class="submit-button"
+                    type="submit">
+                    Submit
+                </button>
+                <button
+                    class="cancel-button"
+                    type="button"
+                    @click="handleCancel">
+                    Cancel
+                </button>
             </div>
         </form>
     </div>
@@ -23,30 +43,33 @@
 export default {
     data() {
         return {
-            domainRoot: "",
-            depth: 0,
+            domainRoot: '',
+            depth: 0
         };
     },
     methods: {
         async handleSubmit() {
             if (!this.$refs.form.checkValidity()) {
-                this.$refs.form.reportValidity()
+                this.$refs.form.reportValidity();
                 return;
             }
             // Handle form submission logic here
-            const response = await fetch('http://localhost:8080/api/crawler/crawl/domain/depth?domainRoot=' + this.domainRoot + '&' + 'depth=' + this.depth, {
-                method: 'POST',
-                mode: 'cors'
-            });
+            const response = await fetch(
+                'http://localhost:8080/api/crawler/crawl/domain/depth?domainRoot=' + this.domainRoot + '&' + 'depth=' + this.depth,
+                {
+                    method: 'POST',
+                    mode: 'cors'
+                }
+            );
             // Reset form fields
-            this.domain = "";
+            this.domain = '';
             this.$emit('close', { message: 'Form closed successfully' });
         },
         handleCancel() {
-            this.domain = "";
+            this.domain = '';
             this.$emit('close', { message: 'Form closed successfully' });
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

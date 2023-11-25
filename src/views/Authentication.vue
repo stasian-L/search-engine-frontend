@@ -68,7 +68,7 @@ export default {
     },
     async mounted() {
         this.isLoggedIn = localStorage.getItem('authToken') !== null;
-        this.username = atob(localStorage.getItem('authToken').substring(6)).split(':')[0];
+        this.username = atob(localStorage.getItem('authToken')?.substring(6)).split(':')[0];
         if (this.isLoggedIn) {
             const headers = { Authorization: localStorage.getItem('authToken') };
             const response = await fetch('http://localhost:8080/api/search/history', {

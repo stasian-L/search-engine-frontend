@@ -60,7 +60,7 @@ export default {
     },
     methods: {
         onSubmit() {
-            if (this.q.trim()) {
+            if (this.q?.trim()) {
                 const query = {
                     q: this.q,
                     limit: this.limit,

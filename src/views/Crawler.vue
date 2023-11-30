@@ -32,6 +32,7 @@ import CrawlDomainForm from '@/components/CrawlDomainForm.vue';
 import CrawlUrlForm from '@/components/CrawlUrlForm.vue';
 
 export default {
+    name: 'CrawlerForm',
     components: {
         CrawlUrlForm,
         CrawlDomainForm

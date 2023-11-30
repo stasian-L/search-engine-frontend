@@ -2,7 +2,7 @@
     <div class="buttons">
         <button
             class="auth-button"
-            @click="this.showModal = true">
+            @click="onLogin">
             Sign in
         </button>
         <button
@@ -29,7 +29,7 @@
 <script>
 import AuthForm from '@/components/AuthForm.vue';
 export default {
-    name: 'Authentication',
+    name: 'AuthenticationForm',
     data() {
         return {
             showModal: false,
@@ -38,6 +38,9 @@ export default {
         };
     },
     methods: {
+        onLogin() {
+            this.$router.push({name:'auth'})
+        },
         logout() {
             localStorage.removeItem('authToken');
             localStorage.removeItem('suggestions');

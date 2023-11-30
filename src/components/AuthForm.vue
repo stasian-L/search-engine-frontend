@@ -171,6 +171,7 @@ export default {
             if (response.status !== 401) {
                 localStorage.setItem('authToken', 'Basic ' + btoa(this.loginData.username + ':' + this.loginData.password));
                 this.$emit('close', { message: 'Form closed successfully' });
+                this.$router.push('/home');
             } else {
                 this.loginError = 'Bad credentials';
             }
@@ -179,7 +180,8 @@ export default {
             this.isRegister = !this.isRegister;
         },
         handleCancel() {
-            this.$emit('close', { message: 'Form closed successfully' });
+            //this.$emit('close', { message: 'Form closed successfully' });
+            this.$router.push({ name:'home' })
         }
     }
 };

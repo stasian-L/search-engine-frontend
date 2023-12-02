@@ -1,11 +1,11 @@
 <template>
     <div class="content">
-        <div style="position: absolute; top: 10px; left: 5px">
+        <header>
+            <crawler></crawler>
             <authentication
                 @authorize="onAuthorize"
                 @logout="onLogout"></authentication>
-        </div>
-        <div class="crawler-button"><crawler></crawler></div>
+        </header>
         <div class="logo-wrap">
             <img
                 title="SnailSnailGo"
@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         search(query) {
-            this.suggestions.unshift(query.q);
+            this.suggestions?.unshift(query.q);
             this.suggestions = [...new Set(this.suggestions)];
             localStorage.setItem('suggestions', this.suggestions.toString());
 
@@ -56,7 +56,7 @@ export default {
     async mounted() {
         let isLoggedIn = localStorage.getItem('authToken') !== null;
         if (isLoggedIn) {
-            this.suggestions = localStorage.getItem('suggestions').split(',');
+            this.suggestions = localStorage.getItem('suggestions')?.split(',');
         }
     },
     components: {
@@ -67,28 +67,19 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .content {
-    position: absolute;
     font: inherit;
-    height: 91%;
     width: 100%;
-    font-size: 100%;
-    vertical-align: baseline;
-    padding-top: 60px;
-    margin: -8px;
-    background-color: #fefefe;
 }
 
-.crawler-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    margin: 5px;
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
 }
 
 .logo-wrap {
-    position: relative;
     display: block;
     max-width: 300px;
     margin: auto;

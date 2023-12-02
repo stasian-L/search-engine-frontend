@@ -30,7 +30,7 @@
             <datalist
                 id="browserList"
                 style="width: 1000px">
-                <option v-for="suggestion in suggestions">{{ suggestion }}</option>
+                <option v-for="[suggestion, index] in suggestions" :key="index">{{ suggestion }}</option>
             </datalist>
             <i
                 id="search_form_input_clear"
@@ -74,7 +74,7 @@ export default {
             if (this.q !== '') this.isInputNotEmpty = true;
             else this.isInputNotEmpty = false;
         },
-        onClearIconClick(event, item) {
+        onClearIconClick() {
             this.isInputNotEmpty = false;
             this.q = '';
         }

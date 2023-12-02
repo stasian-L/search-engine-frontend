@@ -1,11 +1,12 @@
 <template>
-    <div class="dropdown">
-        <button
-            @click="toggleDropdown"
-            class="dropdown-button">
-            Crawler
-        </button>
-        <ul :class="{ 'menu-list': true, 'is-visible': showDropdown }">
+    <Dropdown>
+        <template #trigger>
+            <button
+                class="dropdown-button">
+                Crawler
+            </button>
+        </template>
+        <ul class="menu-list">
             <li
                 v-for="item in menuItems"
                 :key="item.id">
@@ -16,7 +17,8 @@
                 </div>
             </li>
         </ul>
-        <div
+    </Dropdown>
+    <div
             v-if="showModal"
             class="modal-background">
             <div class="modal-container">
@@ -25,17 +27,18 @@
                     @close="closeForm" />
             </div>
         </div>
-    </div>
 </template>
 <script>
 import CrawlDomainForm from '@/components/CrawlDomainForm.vue';
 import CrawlUrlForm from '@/components/CrawlUrlForm.vue';
+import Dropdown from 'v-dropdown'
 
 export default {
     name: 'CrawlerForm',
     components: {
         CrawlUrlForm,
-        CrawlDomainForm
+        CrawlDomainForm,
+        Dropdown
     },
     data() {
         return {
@@ -49,9 +52,6 @@ export default {
         };
     },
     methods: {
-        toggleDropdown() {
-            this.showDropdown = !this.showDropdown;
-        },
         openForm(itemId) {
             this.currentForm = this.getFormName(itemId);
             this.showModal = true;
@@ -72,11 +72,7 @@ export default {
     }
 };
 </script>
-<style>
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+<style scoped>
 
 .dropdown-button {
     width: 70px;
@@ -94,24 +90,10 @@ export default {
 }
 
 .menu-list {
-    position: absolute;
-    top: 100%;
-    width: 130%;
-    right: 0;
-    z-index: 1;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 5px 0px;
-    list-style: none;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-}
-
-.is-visible {
-    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
 }
 
 .menu-item {
@@ -121,6 +103,7 @@ export default {
     font-size: 12px;
     text-decoration: none;
     text-align: left;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 .menu-item:hover {

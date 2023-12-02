@@ -28,6 +28,7 @@
 </template>
 <script>
 export default {
+    name: 'ResultItem',
     props: ['title', 'url', 'description'],
     computed: {
         iconUrl() {

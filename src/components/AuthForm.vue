@@ -47,7 +47,7 @@
                     </button>
                 </div>
             </form>
-            <p>
+            <p class="info-text">
                 Already have an account?
                 <a
                     href="#"
@@ -97,7 +97,7 @@
                     </button>
                 </div>
             </form>
-            <p>
+            <p class="info-text">
                 Don't have an account?
                 <a
                     href="#"
@@ -194,11 +194,19 @@ export default {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     margin: auto;
+    background-color: #dae5daa8;
+    position: relative;
+    top: 30%;
+}
+
+.container > div {
+    flex: 1;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 label {
@@ -216,19 +224,6 @@ input {
     width: 100%;
     font-size: 12px;
 }
-
-/*button[type="submit"] {*/
-/*    background-color: #7C7C7CB7;*/
-/*    color: white;*/
-/*    border: none;*/
-/*    border-radius: 5px;*/
-/*    padding: 10px;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*button[type="submit"]:hover {*/
-/*    background-color: #4F4F4FFF;*/
-/*}*/
 
 a {
     color: #4f4f4f;
@@ -301,10 +296,11 @@ div:has(> input) {
 }
 
 h2 {
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
-p {
+.info-text {
     font-size: 12px;
+    margin: 15px;
 }
 </style>

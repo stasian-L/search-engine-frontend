@@ -74,7 +74,7 @@ export default {
 </script>
 <style scoped>
 .title {
-    margin-bottom: 5px;
+    margin-top: 15px;
 }
 
 .crawl-url-form {

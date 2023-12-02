@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+    <div class="wrapper">
+        <div class="container">
         <div v-if="isRegister">
             <h2>Registration</h2>
             <form ref="registerForm">
@@ -107,6 +108,7 @@
             </p>
         </div>
     </div>
+    </div>
 </template>
 
 <script>
@@ -171,7 +173,6 @@ export default {
             if (response.status !== 401) {
                 localStorage.setItem('authToken', 'Basic ' + btoa(this.loginData.username + ':' + this.loginData.password));
                 this.$emit('close', { message: 'Form closed successfully' });
-                this.$router.push('/home');
             } else {
                 this.loginError = 'Bad credentials';
             }
@@ -180,14 +181,17 @@ export default {
             this.isRegister = !this.isRegister;
         },
         handleCancel() {
-            //this.$emit('close', { message: 'Form closed successfully' });
-            this.$router.push({ name:'home' })
+            this.$emit('close', { message: 'Form closed successfully' });
+            this.$router.back();
         }
     }
 };
 </script>
 
 <style scoped>
+.wrapper {
+    padding-top: 15%;
+}
 .container {
     border-radius: 10px;
     padding: 5px;

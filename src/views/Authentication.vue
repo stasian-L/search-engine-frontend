@@ -1,34 +1,39 @@
 <template>
     <div class="buttons">
         <button
+            v-if="!isLoggedIn"
             class="auth-button"
             @click="onLogin">
             Sign in
         </button>
-        <button
-            v-if="isLoggedIn"
-            class="auth-button"
-            @click="logout">
-            Log out
-        </button>
-    </div>
-    <div
-        v-if="username"
-        style="font-size: 12px; position: absolute; left: 10px">
-        Account: {{ username }}
-    </div>
-    <div
-        v-if="showModal"
-        class="modal-background">
-        <div class="modal-container">
-            <auth-form @close="closeForm" />
+        <div class="acc-drop" v-if="isLoggedIn">
+            <Dropdown>
+                <template #trigger>
+                    <button class="btn auth-button">Account</button>
+                </template>
+                <ul class="menu-list">
+                    <li>
+                        <div class="menu-item">Account: <b>{{ username }}</b></div>
+                    </li>
+                    <li>
+                        <div 
+                        class="menu-item"
+                        @click="logout">
+                        Log out
+                    </div>
+                    </li>
+                </ul>
+            </Dropdown>
         </div>
     </div>
 </template>
 
 <script>
-import AuthForm from '@/components/AuthForm.vue';
+import Dropdown from 'v-dropdown'
 export default {
+    components: {
+        Dropdown
+    },
     name: 'AuthenticationForm',
     data() {
         return {
@@ -53,7 +58,7 @@ export default {
             this.showModal = false;
             this.isLoggedIn = localStorage.getItem('authToken') !== null;
             if (this.isLoggedIn) {
-                this.username = atob(localStorage.getItem('authToken').substring(6)).split(':')[0];
+                this.username = window.atob(localStorage.getItem('authToken')?.substring(6))?.split(':')[0];
                 const headers = { Authorization: localStorage.getItem('authToken') };
                 const response = await fetch('http://localhost:8080/api/search/history', {
                     method: 'GET',
@@ -86,9 +91,6 @@ export default {
             );
         }
     },
-    components: {
-        AuthForm
-    }
 };
 </script>
 
@@ -130,8 +132,29 @@ export default {
 
 .buttons {
     display: flex;
+    gap: 5px;
 }
-.buttons > button {
-    margin: 5px;
+
+.menu-item {
+    display: block;
+    padding: 5px 0;
+    color: #333;
+    font-size: 12px;
+    text-decoration: none;
+    text-align: left;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.menu-item:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+
 }
 </style>

@@ -15,18 +15,20 @@ export default class App extends Vue {}
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
-html, body, #app {
+html, body, body > #app {
     height: 100%;
 }
 
 #app {
+    min-height: 100%;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
 
-    background: linear-gradient(90deg, rgba(216,223,212,1) 0%, rgba(255,253,255,0.9920343137254902) 50%, rgba(216,223,212,1) 100%);
+    background: #eafaee;
 }
 </style>

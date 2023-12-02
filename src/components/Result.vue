@@ -40,7 +40,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .result {
     font-family: Arial, sans-serif;
     -webkit-box-sizing: border-box;
@@ -51,8 +51,10 @@ export default {
     margin-bottom: 1.2em;
     position: relative;
     word-wrap: break-word;
-    border-radius: 4px;
-    border: 1px solid transparent;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background-color: #effaea;
+    border: 1px solid #ccc;
 }
 .result__title {
     font-family: Arial, sans-serif;

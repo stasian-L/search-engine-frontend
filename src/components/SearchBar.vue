@@ -86,7 +86,6 @@ export default {
 .search-bar {
     font: inherit;
     vertical-align: baseline;
-    height: 100%;
 }
 
 .search-bar__form {
@@ -96,7 +95,7 @@ export default {
     justify-content: space-between;
     height: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box-shadow property */
-    background-color: white;
+    background-color: #eafaf6;
 }
 .search-bar__form:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -112,6 +111,7 @@ export default {
     border: none;
     outline: none;
     margin: 5px 5px 5px 15px;
+    background-color: #eafaf6;
 }
 
 .search-bar__button {

@@ -5,7 +5,7 @@
             <authentication
                 @authorize="onAuthorize"
                 @logout="onLogout"></authentication>
-        </header>
+        </header>   
         <div class="logo-wrap">
             <img
                 title="SnailSnailGo"
@@ -108,7 +108,6 @@ header {
     display: block;
     float: none;
     width: 70%;
-    height: 2.5em;
     max-width: 1000px;
 }
 </style>

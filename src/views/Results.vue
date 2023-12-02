@@ -1,45 +1,46 @@
 <template>
-    <!--    <div style="position: absolute; top: 10px; right: 10px"><button class="auth-button" @click="this.$router.push('auth')">Sign in</button></div>-->
-    <!--    <div v-if="isLoggedIn" style="position: absolute; top: 10px; right: 90px"><button class="auth-button" @click="logout">Log out</button></div>-->
-    <div style="position: fixed; top: 5px; right: 5px; z-index: 3">
-        <authentication
-            @authorize="onAuthorize"
-            @logout="onLogout"></authentication>
-    </div>
-    <!--    <div class="crawler-button"><crawler></crawler></div>-->
-    <div class="header">
-        <a
-            href="http://localhost:8081/"
-            class="header__a"
-            style="outline: none">
-            <img
-                title="SnailSnailGo"
-                class="header__logo"
-                src="../assets/logo.png"
-                alt="atakata_logo" />
-        </a>
-        <div class="header__search-wrapper">
-            <SearchBar
-                @search="search"
-                :suggestions="suggestions" />
+    <div>
+        <div class="header">
+            <div>
+                <a
+                    href="http://localhost:8080/"
+                    class="header__a"
+                    style="outline: none">
+                    <img
+                        title="SnailSnailGo"
+                        class="header__logo"
+                        src="../assets/logo.png"
+                        alt="atakata_logo" />
+                </a>
+
+            </div>
+            <div class="header__search-wrapper">
+                    <SearchBar
+                        @search="search"
+                        :suggestions="suggestions" />
+            </div>
+            <authentication
+                @authorize="onAuthorize"
+                @logout="onLogout"></authentication>
         </div>
     </div>
-    <div class="results">
-        <template v-for="result in results">
-            <Result
-                class="results__result"
-                v-bind:title="result.title"
-                v-bind:url="result.url"
-                v-bind:description="result.description" />
-        </template>
-    </div>
+    <main class="main">
+        <div class="results">
+            <template v-for="(result, index) in results" :key="index">
+                <Result
+                    class="results__result"
+                    v-bind:title="result?.title"
+                    v-bind:url="result?.url"
+                    v-bind:description="result?.description" />
+            </template>
+        </div>
+    </main>
 </template>
 
 <script>
 import Result from '@/components/Result.vue';
 import SearchBar from '@/components/SearchBar';
 import Authentication from '@/views/Authentication.vue';
-import Crawler from '@/views/Crawler.vue';
 
 export default {
     data() {
@@ -65,19 +66,19 @@ export default {
             this.isLoggedIn = false;
         },
         async searchRequest(query) {
-            this.suggestions.unshift(query.q);
+            this.suggestions?.unshift(query.q);
             this.suggestions = [...new Set(this.suggestions)];
             localStorage.setItem('suggestions', this.suggestions.toString());
             const headers = { 'Content-Type': 'application/json', Authorization: localStorage.getItem('authToken') };
             const response = await fetch('http://localhost:8080/api/search/documents?query=' + query.q, {
-                method: 'GET',
-                headers,
-                mode: 'cors'
+            method: 'GET',
+            headers,
+            mode: 'cors'
             });
             this.results = await response.json();
-        },
+                    },
         onAuthorize() {
-            this.suggestions = localStorage.getItem('suggestions').split(',');
+            this.suggestions = localStorage.getItem('suggestions')?.split(',');
         },
         onLogout() {
             this.suggestions = [];
@@ -98,40 +99,46 @@ export default {
                 jsonData.map(a => a.text)
             );
         }
-        this.suggestions = localStorage.getItem('suggestions').split(',');
+        this.suggestions = localStorage.getItem('suggestions')?.split(',');
         this.searchRequest(this.$route.query);
     },
     components: {
         Authentication,
-        Crawler,
         Result,
         SearchBar
     }
 };
 </script>
 
-<style>
+<style scoped>
 .header {
     position: fixed;
+    z-index: 10000;
     top: 0;
-    width: 100%;
-    z-index: 2;
+    right: 0;
+    left: 0;
+    min-width: 600px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #ccc;
-    margin: -8px -10px;
-    padding: 10px 10px;
-    background-color: #fefefe;
+    background-color: #effaea;
+}
+
+.header .search {
+    display: flex;
+    flex: 1;
+}
+
+.header > * {
+    padding: 10px;
 }
 
 .header__search-wrapper {
-    margin-top: 20px;
-    margin-left: 30px;
-    margin-bottom: 20px;
+    margin: 20px;
     display: block;
     float: none;
-    width: 70%;
-    height: 2.2em;
+    width: 60%;
 }
 
 .header__logo {
@@ -142,19 +149,24 @@ export default {
     max-width: 60px;
     object-fit: cover;
     opacity: 0.7;
-    /*background-color: white;*/
 }
 
 .header__logo:hover {
     opacity: 1;
 }
 
+.main {
+    box-sizing: border-box;
+    min-width: 600px;
+    min-height: 100%;
+    position: relative;
+    padding-top: 120px;
+    padding-bottom: 6px;
+}
+
 .results {
-    margin-top: 120px;
     max-width: 590px;
     padding-left: 100px;
-}
-.results__result {
-    margin-top: 30px;
+    margin: auto;
 }
 </style>
